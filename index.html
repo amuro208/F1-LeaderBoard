@@ -1,0 +1,96 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>ReActionWall LeaderBoard</title>
+      <script src="./js/common/json2.js"        type="text/javascript"></script>
+      <script src="./js/common/TweenMax.min.js" type="text/javascript"></script>
+      <script src="./js/common/common.js"        type="text/javascript"></script>
+      <script src="./js/common/CMS.js"        type="text/javascript"></script>
+      <script src="./js/common/pageBase.js"        type="text/javascript"></script>
+      <script src="./js/common/WebSocket.js"    type="text/javascript"></script>
+      <script src="./js/common/Configuration.js"       type="text/javascript"></script>
+      <script src="./js/common/panelConf.js"       type="text/javascript"></script>
+      <script src="./js/common/panelDebug.js"       type="text/javascript"></script>
+
+      <script src="./js/reactionGameBuzzerCtrl.js" type="text/javascript"></script>
+      <script src="./js/reactionGameLeaderboard.js" type="text/javascript"></script>
+	    <script src="./js/queueList.js" type="text/javascript"></script>
+      <script src="./js/tcsApp.js"        type="text/javascript"></script>
+
+      <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="./css/style.css">
+      <link rel="stylesheet" type="text/css" href="./css/style-leaderboard.css">
+
+      <script type="text/javascript">
+			document.addEventListener("keydown", function (e) {
+			     log("keydown : "+e.keyCode);
+					if (e.keyCode === 116) {
+						location.reload();
+					}
+				});
+
+
+        function onload(){
+          tcsapp.init();
+        }
+      </script>
+  </head>
+
+    <body onload="onload();" style="background-color:#000">
+      <!-- CONFIGURATION -->
+      <div id = "panelConf" class="full-popup"></div>
+
+      <!-- DEBUGGING PANEL-->
+      <div id = "panelDebug" class="full-popup"></div>
+
+      <div class="hidden-button lt" onclick="tcsapp.panelConf.show();" alt = "Open Configuration"></div>
+      <div class="hidden-button rt" onclick="tcsapp.panelDebug.show();" alt = "Open Log Panel"></div>
+
+
+      <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+          <div class="site-container">
+            <!-- Header -->
+      			<div class="masthead">
+      				<img src="./img/logo-top.png" style="margin-top:74px"/>
+      			</div>
+
+            <div class="mastbody">
+
+              <!-- normally pages are set under mastbody -->
+              <!-- Queue list -->
+        			<div id="queueContainer" class="queue-container">
+        				<h1 class="queue-title"> Who is next?</h1>
+        				<div class="queue-indicator"><img src="./img/arrow_queue.png" /></div>
+
+        				<div class="queue-container-wrapper">
+        					<div id = "queueListContainer" class="queue-list-container">
+        					</div>
+        				</div>
+        			</div>
+
+              <!-- Board-titles -->
+        			<div class="board-title">
+                <div class="inner-row">
+          				<div class="item pos">pos</div>
+          				<div class="item team">team</div>
+          				<div class="item uname">name</div>
+          				<div class="item score">pt</div>
+                </div>
+        			</div>
+              <!-- Board-list -->
+        			<div id="mContainerList" class="board-list-container">
+        			</div>
+            </div>
+            <!-- Footer -->
+      			<div id="mContainerFooter" class="mastfoot">
+      				<img src="./img/logo-bottom.png" style="margin-top:50px"/>
+      			</div>
+    		</div>
+    	</div>
+    </div>
+  </body>
+</html>

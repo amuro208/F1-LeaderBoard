@@ -1,0 +1,18 @@
+{
+  "name": "reactionGame-GameUI",
+  "version": "1.0.0",
+  "description": "reactionGame-GameUI",
+  "repository": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron app.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "1.7.8",
+    "electron-rebuild": "^1.6.0"
+  },
+  "dependencies": {
+    "serialport": "^6.0.0"
+  }
+}
