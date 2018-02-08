@@ -1,28 +1,45 @@
 
 
-var fs = require("fs");
+var fs;
 var conf = {};
-var preset = {};
-preset.current = {};
-preset.default = {};
-
 var confCtrl = {};
-confCtrl.initialReady = false;
-confCtrl.load = function(){
-  fs.readFile('configutration.json', 'utf8', function readFileCallback(err, data){
-    if (err){
-        console.log("NO CONFIGURATION FILE "+err);
-        confCtrl.objCopy(conf,preset.current);
-        confCtrl.objCopy(conf,preset.default);
-        var json = JSON.stringify(preset,null ," "); //convert it back to json
-        fs.writeFile('configutration.json', json, 'utf8', function writeFileCallback(err){}); // write it back
-    } else {
-        console.log("THERE IS CONFIGURATION FILE "+data);
-        preset =  JSON.parse(data);
-        confCtrl.objCopy(preset.current,conf);
-        confCtrl.initialReady = true;
 
+confCtrl.initialReady = false;
+confCtrl.storage = "local";
+confCtrl.load = function(){
+
+  if(this.storage == "local"){
+    if (typeof(Storage) !== "undefined") {
+      if(localStorage.getItem(tcsapp.appId) == null){
+        console.log("NO CONFIGURATION FILE ");
+        confCtrl.objCopy(preset.confp,conf);
+        confCtrl.save();
+      }else{
+        var data = localStorage.getItem(tcsapp.appId);
+          console.log("THERE IS CONFIGURATION FILE "+data);
+        var obj =  JSON.parse(data);
+        confCtrl.objCopy(obj,conf);
+        confCtrl.initialReady = true;
+      }
     }
+
+  }else{
+    fs = require("fs");
+    fs.readFile('configutration.json', 'utf8', function readFileCallback(err, data){
+      if (err){
+          console.log("NO CONFIGURATION FILE "+err);
+          confCtrl.objCopy(preset.confp,conf);
+          confCtrl.save();
+      } else {
+          console.log("THERE IS CONFIGURATION FILE "+data);
+          var obj =  JSON.parse(data);
+          confCtrl.objCopy(obj,conf);
+          confCtrl.initialReady = true;
+
+      }
+    });
+  }
+
     var event = new CustomEvent("onConfigLoaded", {
       detail: {
         msg:"onConfigLoaded",
@@ -33,13 +50,16 @@ confCtrl.load = function(){
       });
     document.dispatchEvent(event);
 
-  });
-}
+  };
+
 
 confCtrl.save = function(){
-    var json = JSON.stringify(preset,null," ");
-    fs.writeFile('configutration.json', json, 'utf8', function writeFileCallback(err){});
-    this.objCopy(preset.current,conf);
+    var json = JSON.stringify(conf,null," ");
+      if(this.storage == "local"){
+          localStorage.setItem(tcsapp.appId,json);
+      }else{
+          fs.writeFile('configutration.json', json, 'utf8', function writeFileCallback(err){});
+      }
     location.reload();
 }
 

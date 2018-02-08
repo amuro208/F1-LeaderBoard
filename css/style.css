@@ -87,7 +87,7 @@ html,body{
   width:100%;
   height:100%;
   background-color: #000;
-  background-image: url(../img/f5WS_webpagebackground-1.jpg); background-repeat:repeat-y; background-position: center;background-size:100% 100%;
+
 }
 body {
   color: #fff;
@@ -108,12 +108,12 @@ body {
 /* App Layout Basic */
 
 .site-wrapper       {margin: 0; padding: 0; width: 100%; height: 100%;}
-.site-wrapper-inner {min-width: 1080px; vertical-align: top;}
-.site-container     {width:90%; height:3840px; margin:auto; background-color:#EEE}
+.site-wrapper-inner {min-width: 1080px;max-width: 1080px; vertical-align: top;}
+.site-container     {width:100%; height:3840px; margin:auto; background-color:#EEE}
 
-.masthead {height:159px;width:100%;background-color:#FFF;text-align:center}
-.mastbody {width:100%;background-color:#EEE;text-align:center;vertical-align: top;}
-.mastfoot {position:absolute;height:150px;width:90%;bottom:0;z-index:1000;text-align:center;vertical-align:middle}
+.masthead {height:162px;width:100%;background-color:#FFF;text-align:center}
+.mastbody {width:100%;background-color:#000;text-align:center;vertical-align: top;}
+.mastfoot {position:absolute;height:21px;width:100%;bottom:0;z-index:1000;text-align:center;vertical-align:middle;background-image: url(../img/logo-bottom.png);   background-position: center;background-size:auto 100%;}
 
 
 /*landscape normal*/

@@ -23,31 +23,41 @@
 		  log('Connected');
 		  //arduino.write('Hello, server! Love, Client.\n');
 		});
-		sound.background = new Audio('./sound/background.mp3');
+		sound.background = new Audio('./sound/f1_idle.mp3');
 		sound.background.loop = true;
-		sound.whitle = new Audio('./sound/whitle_long.mp3');
-		sound.whitle_short = new Audio('./sound/whitle_short.mp3');
-		sound.success = new Audio('./sound/success.mp3');
+		sound.background.volume =.8;
+
+		sound.startloop = new Audio('./sound/f1_start_loop.mp3');
+		sound.startloop.volume =.4;
+		//sound.startloop.loop = true;
+		sound.whitle = new Audio('./sound/whitle.mp3');
+		sound.whitle.volume =.4;
+
+		sound.whitle_short = new Audio('./sound/f1_beep2.mp3');
+		sound.whitle_short.volume =.5;
+
+		//sound.success = new Audio('./sound/success.mp3');
 	}
 
 	var strBuff = "";
-		arduino.on('data', function(d) {
-		  var data = ""+d;
-		//  console.log('Received: ' + data);
-		  for(var i = 0;i<data.length;i++){
-		  //  console.log("data.charCodeAt("+i+")"+data.charAt(i)+"("+data.charCodeAt(i)+")");
-			if(data.charCodeAt(i) == 13){
-			  strBuff.substring(0,strBuff.length-1);
-			  game.onArduinoData(strBuff);
-			  strBuff = "";
-			}else{
-			  if(data.charCodeAt(i) > 0)strBuff+=data.charAt(i);
-			}
-		  }
-		});
+	
+	arduino.on('data', function(d) {
+	  var data = ""+d;
+	//  console.log('Received: ' + data);
+	  for(var i = 0;i<data.length;i++){
+	  //  console.log("data.charCodeAt("+i+")"+data.charAt(i)+"("+data.charCodeAt(i)+")");
+		if(data.charCodeAt(i) == 13){
+		  strBuff.substring(0,strBuff.length-1);
+		  game.onArduinoData(strBuff);
+		  strBuff = "";
+		}else{
+		  if(data.charCodeAt(i) > 0)strBuff+=data.charAt(i);
+		}
+	  }
+	});
 
-		arduino.on('close', function() {
-		  log('Connection closed');
+	arduino.on('close', function() {
+	  log('Connection closed');
 	});
 
 	game.currentOn = 0;
@@ -82,7 +92,7 @@
 			if(tcsapp.isGameRunning){
 				game.rId = setTimeout(game.randomOn,20);
 				if(rb.newuserScore>5 &&   rb.newuserScore%10 == 0){
-					sound.success.play();
+					//sound.success.play();
 				}
 			}
 		}else if(data.trim() == ("bd"+game.currentOn)){
@@ -135,6 +145,7 @@
 		setTimeout(game.allOn,100);
 		setTimeout(game.allOff,500);
 		clearTimeout(game.rId);
+		sound.background.play();
 	}
 	game.generateRandomSequence = function(){
 		log("generateRandomSequence WHY1");
@@ -173,22 +184,24 @@
 
 		game.currentOn = 0;
 		game.randomOn();
-		sound.background.play();
-		sound.success.play();
+		sound.background.pause();
+		sound.startloop.currentTime = 0;
+		sound.startloop.play();
 
-		//SoundFac.play("start");
-		//SoundFac.stop("idle");
 	}
 	game.timeout = function(force){
 		clearTimeout(game.rId);
-		sound.background.pause();
+		//sound.background.pause();
+
 		sound.whitle.play();
 		setTimeout(function(){
 			game.allOff();
+			sound.startloop.pause();
 		},1000);
 	}
 	game.gameStop = function(){
 		clearTimeout(game.rId);
 		sound.background.pause();
+		sound.startloop.pause();
 		game.allOff();
 	}

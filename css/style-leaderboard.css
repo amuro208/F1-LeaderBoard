@@ -15,27 +15,27 @@ html, body {margin: 0; padding: 0; overflow: hidden}
   display:table;
   width:100%;
   margin:auto;
-  height:65px;
+  height:80px;
 }
 .item{
   display:table-cell;
-  font-size: 1.4em;
+  font-size: 1.7em;
   font-weight: bold;
   font-family:'Roboto-Bold', sans-serif;
-  color:#444;
+  color:#EEE;
   text-align:center;
   vertical-align: middle;
 }
-.pos{width:6%;}
-.team{width:10%;}
-.uname{text-align:left;}
-.score{width:9%;}
+.pos{width:10%;}
+.team{width:22%;}
+.uname{text-align:left;padding-left: 40px;}
+.score{width:10%;}
 
 
 /* LIST TITLES */
 .board-title{
   background-color:#d91883;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .board-title .inner-row {
   width:98%;
@@ -49,10 +49,10 @@ html, body {margin: 0; padding: 0; overflow: hidden}
 
 /* LIST ITEMS*/
 .board-list-container{
-  border:1px dashed #EEE;/* very important */
+  border:1px solid #000;/*Very Important*/
   position:relative;
   margin:auto;
-  width:98%;
+  width:100%;
 }
 .board-list{
   margin-top:0px;
@@ -61,22 +61,23 @@ html, body {margin: 0; padding: 0; overflow: hidden}
 
 .board-list .inner-row{
   background-color:#FFF;
-  height:65px;
-  border-bottom: 5px solid #EEE;
+  height:80px;
+  background-image: url(../img/list_bg.png);  background-position: left; background-size:auto 100%;
+  /* border-bottom: 5px solid #EEE; */
 }
 .board-list .team-flag{
-  width:60px;
-  height:40px;
-  border:1px solid #DDD;
+  width:145px;
+  height:43px;
+  /* border:1px solid #DDD; */
 }
 .board-list .team-flag-none{
-  width:60px;
-  height:40px;
+  width:145px;
+  height:43px;
   border:none;
 }
 .board-list .score{
   color:#FFF;
-  background-image: url(../img/slider_shapes.png);  background-position: center; background-size:auto 100%;
+  /* background-image: url(../img/slider_shapes.png);  background-position: center; background-size:auto 100%; */
 }
 
 
@@ -89,8 +90,8 @@ html, body {margin: 0; padding: 0; overflow: hidden}
 }
 .board-newitem .inner-row{
   width:100%;
-  height:60px;
-  background-image: url(../img/list_bg_over_.png);  background-position: left; background-size:auto 100%;
+  height:80px;
+  background-image: url(../img/list_bg_over.png);  background-position: left; background-size:auto 100%;
 }
 .board-newitem .item{
   color:#FFF;
@@ -99,15 +100,53 @@ html, body {margin: 0; padding: 0; overflow: hidden}
 .board-newitem .pos{}
 .board-newitem .team{}
 .board-newitem .team img{
-  width:60px;
-  height:40px;
-  border:1px solid #DDD;
+  width:145px;
+  height:43px;
+  /* border:1px solid #DDD; */
 }
 
-.board-newitem .score{background-image:none}
+.board-newitem .score{color:#FFF;}
 
 
+#edmboard{
+  width:1280px;height:853px;position:absolute;z-index:1000;  background-image: url(../img/edm_board_bg.png);  background-position: left; background-size:auto 100%;left:100px;top:100px;
+}
+.edm-list-container{
+  position:relative;
+  margin:auto;
+  top:208px;
+  width:680px;
+  height:500px;
+  background-color:#000000;
+}
+.edm-list{
+  margin-top:0px;
+  position:relative;
+}
 
+.edm-list .inner-row{
+  background-color:#FFF;
+  height:50px;
+  background-image: url(../img/list_edm_bg.png);  background-position: left; background-size:auto 100%;
+  /* border-bottom: 5px solid #EEE; */
+}
+.edm-list .inner-row .new{
+  background-image: url(../img/list_edm_bg_over.png);  background-position: left; background-size:auto 100%;
+}
+.edm-list .team-flag{
+  width:120px;
+  height:35px;
+  /* border:1px solid #DDD; */
+}
+.edm-list .team-flag-none{
+  width:120px;
+  height:35;
+  border:none;
+}
+.edm-list .score{
+  color:#FFF;
+  /* background-image: url(../img/slider_shapes.png);  background-position: center; background-size:auto 100%; */
+}
 /* QUEUE LIST */
 
 
@@ -116,7 +155,7 @@ html, body {margin: 0; padding: 0; overflow: hidden}
   overflow:hidden;
   display:block;
   height:0px;
-  background-color:#00acb3;
+  background-color:#292929;
 }
 .queue-title{
   color:#FFF;padding-top:30px;
@@ -127,7 +166,7 @@ html, body {margin: 0; padding: 0; overflow: hidden}
 .queue-container-wrapper{
   position:relative;
   width:100%;
-  height:600px;
+  height:400px;
   overflow:hidden;
 }
 .queue-list-container{
@@ -152,13 +191,13 @@ html, body {margin: 0; padding: 0; overflow: hidden}
   padding-left: 130px;
 }
 .queue-list .team-flag{
-  width:53px;
-  height:34px;
-  border:3px solid rgba(255,255,255,1);
+  width:145px;
+  height:43px;
+  /* border:3px solid rgba(255,255,255,1); */
 }
 .queue-list .team-flag-none{
-  width:60px;
-  height:40px;
+  width:145px;
+  height:43px;
   border:3px solid rgba(255,255,255,0);
 }
 .queue-list .uname{

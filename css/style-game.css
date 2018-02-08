@@ -81,7 +81,8 @@
   .game-user{height:180px;display:block;margin:0 auto;}
 
   .user-gamecard{width:300px;}
-  .user-gamecard-flag img{outline: 1px solid #999;width:140px;height:80px;vertical-align:middle; box-shadow: 0 0 14px rgba(0,0,0,1.0);}
+  /* .user-gamecard-flag img{outline: 1px solid #999;width:140px;height:80px;vertical-align:middle; box-shadow: 0 0 14px rgba(0,0,0,0.0);} */
+  .user-gamecard-flag img{width:140px;vertical-align:middle; box-shadow: 0 0 14px rgba(0,0,0,0.0);}
   .user-gamecard .uname{
     width:300px;
     height:30px;

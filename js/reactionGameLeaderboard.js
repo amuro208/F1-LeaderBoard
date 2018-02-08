@@ -1,10 +1,10 @@
+
+importScript('./js/reactionGameEDMboard.js');
+
 var rb = {}
 
-
-
-
 rb.totalItems = 22;
-rb.itemHeight = 65;
+rb.itemHeight = 80;
 rb.newitem;
 rb.olditem;
 rb.lastitem;
@@ -52,32 +52,17 @@ rb.init = function(){
 }
 
 
-
 rb.addNewUser = function(obj){
   var userinfo = obj.split("|")[0].split(",");
   var isKid = userinfo.length<4?false:(userinfo[3]=="true"?true:false);
   game.isKid = isKid;
   game.gameReady();
 
-  //var lastindex = rb.userlist.length-1;
-  //if(lastindex<0)lastindex = 0;
-
-  //rb.userlist[rb.userlist.length] =
   var newitemIndex = rb.userlist.length;
   rb.lastitem.style.marginTop = "250px";
   if(rb.userlist.length == rb.totalItems){
-
-  //  var cntChilds = rb.itemList.childNodes.length;
-	  //var lastItem = rb.itemList.childNodes[cntChilds-1];
-
-		//rb.lastitem.style.display = "none";
-    //var cntChilds = rb.itemList.childNodes.length;
-    //rb.lastitem = rb.itemList.childNodes[cntChilds-1];
-
 		newitemIndex--;
-    //console.log("cntChilds/rb.totalItems : "+cntChilds+"/"+rb.totalItems);
-		//rb.itemList.removeChild(rb.itemList.childNodes[rb.itemList.childNodes.length-1]);
-		//rb.userlist.pop();
+
   }else{
     rb.refitem = rb.itemList.childNodes[newitemIndex+1];
     TweenMax.to(rb.refitem,0.0,{marginTop:rb.itemHeight+"px"});
@@ -85,7 +70,7 @@ rb.addNewUser = function(obj){
     //newitemIndex--;
 
   }
-
+  edmb.photoId = userinfo[2];
   rb.itemList.appendChild(rb.newitem);
   rb.newitem.style.top = ""+(newitemIndex*rb.itemHeight)+"px";
   rb.newuserScore = 0;
@@ -211,6 +196,7 @@ rb.keyboardlistener = function(e){
       break;
     case "ArrowUp":
       if(!tcsapp.isGameRunning)return false;
+      sound.whitle_short.play();
       rb.addScore();
       tcsapp.tcssocket.send("ALL","ADDPOINT","-");
     break;
@@ -268,7 +254,8 @@ rb.onSocketMessage = function(e){
       if(!tcsapp.isGameRunning || !tcsapp.isGameReady)return false;
       tcsapp.isGameRunning = false;
       game.timeout();
-
+      edmb.displayEdmList();
+      edmb.captureElement();
     }else if(e.detail.cmd == "BOARD_CLEARD"){
 	  log("BOARD_CLEARD");
       rb.resetNewItem();

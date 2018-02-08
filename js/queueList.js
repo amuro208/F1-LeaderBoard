@@ -1,6 +1,6 @@
 var ql = {}
-ql.totalItems = 10;
-ql.itemHeight = 65;
+ql.totalItems = 5;
+ql.itemHeight = 80;
 ql.newitem;
 ql.refitem;
 ql.userlist;
@@ -54,9 +54,9 @@ ql.showQueueList = function(msg){
   		}
   	}
   	ql.queueListContainer.style.top = "0px";
-  	var h = this.itemHeight*this.totalItems+65;
+  	var h = this.itemHeight*this.totalItems;
   	TweenMax.to(ql.queueContainer,0.3,{height:h+"px",ease:Power2.easeOut});
-  	TweenMax.to(ql.queueListContainer,0.3,{delay:0.6,top:"-"+64+"px",ease:Power2.easeOut});
+  	TweenMax.to(ql.queueListContainer,0.3,{delay:0.6,top:"-"+this.itemHeight+"px",ease:Power2.easeOut});
 
   	setTimeout(function(){
   		ql.hideQueueList();

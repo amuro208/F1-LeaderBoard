@@ -1,38 +1,61 @@
+importScript('./js/common/json2.js');
+importScript('./js/common/TweenMax.min.js');
+importScript('./js/common/CMS.js');
+importScript('./js/common/Configuration.js');
+importScript('./js/common/WebSocket.js');
+importScript('./js/common/panelConf.js');
+importScript('./js/common/panelDebug.js');
+
+
 var tcsapp = {}
+var preset = {};
 
 tcsapp.pages = [];
-tcsapp.confKeys = [];
+tcsapp.confKeys =  ["CMD_SOCKET_ID","CMD_SOCKET_IP","CMD_SOCKET_PORT","CMS_IP","CMS_CLEAR_BOARD","CMS_LIST","ROOT_PATH","APP_INFINITE_TEST"];
+
 tcsapp.previouspage = 0;
 tcsapp.currentpage = 0;
-
 tcsapp.isGameRunning = false;
 tcsapp.isGameReady = false;
 
 tcsapp.tcssocket = null;
 tcsapp.panelDebug = null;
 tcsapp.panelConf = null;
+tcsapp.appId = "au.com.thecreativeshop.f1.leaderboard";
 
+preset.confp = {
+	CMD_SOCKET_ID:3,
+	CMD_SOCKET_IP:"192.168.0.2",
+	CMD_SOCKET_PORT:9000,
+	CMS_IP:"192.168.0.2",
+	CMS_CLEAR_BOARD:"/codeigniter/index.php/upload/qsrankclear/",
+	CMS_LIST:"/codeigniter/index.php/upload/qsrank/",
+	ROOT_PATH:"C:/PROJECTS/F1/Repository/Final/",
+	APP_INFINITE_TEST:"N"
+};
+preset.confd = {
+	CMD_SOCKET_ID:3,
+	CMD_SOCKET_IP:"127.0.0.1",
+	CMD_SOCKET_PORT:9000,
+	CMS_IP:"127.0.0.1",
+	CMS_CLEAR_BOARD:"/control/f1_rw/codeigniter/index.php/upload/qsrankclear/",
+	CMS_LIST:"/control/f1_rw/codeigniter/index.php/upload/qsrank/",
+	ROOT_PATH:"C:/AMURO/Workspace/F1/ReActionGame/PROJECTS/F1/Repository/Final/",
+	APP_INFINITE_TEST:"N"
+};
 
 
 tcsapp.init = function(){
 
-		conf = {
-			CMD_SOCKET_ID:1,
-			CMD_SOCKET_IP:"127.0.0.1",
-			CMD_SOCKET_PORT:9000,
-			CMS_IP:"127.0.0.1",
-			CMS_CLEAR_BOARD:"/app/codeigniter/index.php/upload/qsrankclear/",
-			CMS_LIST:"/app/codeigniter/index.php/upload/qsrank/",
-			APP_INFINITE_TEST:"N"
-		};
+
 
 		this.panelDebug = new PanelDebug('panelDebug');
-		this.panelConf = new PanelConf('panelConf');
-		this.tcssocket = new TCSWebSocket();
+		this.panelConf  = new PanelConf('panelConf');
+		this.tcssocket  = new TCSWebSocket();
 
 		document.addEventListener("onConfigLoaded",()=>{
 			this.panelDebug.init();
-			this.panelConf.setKeys(conf);
+			this.panelConf.setKeys(this.confKeys);
 			this.panelConf.init();
 
 			if(confCtrl.initialReady){
@@ -46,19 +69,22 @@ tcsapp.init = function(){
 			setTimeout(function(){
 				rb.init();
 				ql.init();
-			},2000);
+				edmb.init();
+			},100);
 
 		})
-
 		confCtrl.load();
 }
 
 
-tcsapp.connectSocket = function(){
-	this.tcssocket.setip(conf.CMD_SOCKET_ID,conf.CMD_SOCKET_IP,conf.CMD_SOCKET_PORT);
-	this.tcssocket.connect();
-}
+	tcsapp.connectSocket = function(){
+		this.tcssocket.setip(conf.CMD_SOCKET_ID,conf.CMD_SOCKET_IP,conf.CMD_SOCKET_PORT);
+		this.tcssocket.connect();
+	}
 
+	tcsapp.reload = function(){
+		location.reload();
+	}
 
 	tcsapp.paging = function(n){
 	//log(":::::::::::::::::::::"+$$(pages[0]));

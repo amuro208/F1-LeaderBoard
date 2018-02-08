@@ -19,12 +19,12 @@
 		<h1>CONFIGURATION</h1>\
 		<div id="socketStatus"></div>\
 		<div class="full-popup-body">'+str+'<div class="full-popup-utils">\
-		    <button onclick="tcsapp.panelConf.save(\'current\')"    id = "btn-save-c"    class="btn btn-sm btn-default">Save to Current</button>\
-				<button onclick="tcsapp.panelConf.save(\'default\')"    id = "btn-save-d"    class="btn btn-sm btn-default">Save to Default</button>\
-				<button onclick="tcsapp.panelConf.load(\'current\')"    id = "btn-load-c"    class="btn btn-sm btn-default">Load Current</button>\
-				<button onclick="tcsapp.panelConf.load(\'default\')"    id = "btn-load-d"    class="btn btn-sm btn-default">Load Default</button>\
+		    <button onclick="tcsapp.panelConf.save()"    id = "btn-save-c"    class="btn btn-sm btn-default">Save</button>\
+				<button onclick="tcsapp.panelConf.load(\'confd\')"    id = "btn-load-c"    class="btn btn-sm btn-default">Preset Debug</button>\
+				<button onclick="tcsapp.panelConf.load(\'confp\')"    id = "btn-load-d"    class="btn btn-sm btn-default">Preset Product</button><br>\
 		    <button onclick="tcsapp.connectSocket()"                id = "btn-connect"   class="btn btn-sm btn-default">Connect</button>\
 		    <button onclick="tcsapp.tcssocket.quit()"               id = "btn-quit"      class="btn btn-sm btn-default">Quit</button>\
+				<button onclick="tcsapp.reload()"                       id = "btn-reload"      class="btn btn-sm btn-default">Reload</button>\
 		  </div>\
 		</div>';
 
@@ -32,7 +32,7 @@
 		document.addEventListener("onSocketClose",this.onSocketClose.bind(this),false);
 		document.addEventListener("onSocketStatus",this.onSocketStatus.bind(this),false);
 
-		this.load("current");
+		this.load("");
 	}
 
 	PanelConf.prototype.setKeys = function (obj){
@@ -48,11 +48,10 @@
 	}
 	PanelConf.prototype.save = function (set){
 		var vlen = this.keys.length;
-		var data = this.getConfigset(set);
 		for(var i = 0; i<vlen; i++){
 			var key = this.keys[i];
 			var value = this.getConfItem(key);
-			data[key] = value;
+			conf[key] = value;
 		}
 		confCtrl.save();
 		///ar json = JSON.stringify(config); //convert it back to json
@@ -64,22 +63,22 @@
 	PanelConf.prototype.load = function (set){
 		var vlen = this.keys.length;
 		var data = this.getConfigset(set);
+		confCtrl.objCopy(data,conf);
 		for(var i = 0; i<vlen; i++){
 			var key = this.keys[i];
 			var value = data[key];
 			this.setConfItem(key,value);
 		}
-		//console.log("default values ... ");
 	}
   PanelConf.prototype.getConfigset = function(set){
 		var data;
 
-		if(set == "current"){
-			data = preset.current;
-		}else if(set == "default"){
-			data = preset.default;
+		if(set == "confp"){
+			data = preset.confp;
+		}else if(set == "confd"){
+			data = preset.confd;
 		}else{
-			data = preset.current;
+			data = conf;
 		}
 		return data;
 	}
@@ -97,6 +96,5 @@
 		this.show();
 	}
 	PanelConf.prototype.onSocketStatus = function(e){
-
 		$$("socketStatus").innerHTML = e.detail.msg;
 	}
